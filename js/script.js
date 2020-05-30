@@ -73,28 +73,25 @@ activity.appendChild(totalCostTag);
 let total = 0;
 
 activity.addEventListener('input', (e) => {
-  let eventDateAndTime = e.target.getAttribute('data-day-and-time');
-  const eventList = activity.querySelectorAll('input');
+  const click = e.target;
+  const eventDateAndTime = click.getAttribute('data-day-and-time');
+  const checkList = activity.querySelectorAll('input');
 
-  for (i = 0; i < eventList.length; i++) {
+  for (i = 0; i < checkList.length; i++) {
     if (
-      eventDateAndTime === eventList[i].getAttribute('data-day-and-time') &&
-      event.target !== eventList[i]
+      eventDateAndTime === checkList[i].getAttribute('data-day-and-time') &&
+      click !== checkList[i]
     ) {
-      if (event.target.checked === true) {
-        eventList[i].disabled = true;
-      } else if (event.target.checked === false) {
-        eventList[i].disabled = false;
+      if (click.checked === true) {
+        checkList[i].disabled = true;
+      } else if (click.checked === false) {
+        checkList[i].disabled = false;
       }
     }
   }
 
   let eventCost = parseInt(e.target.getAttribute('data-cost'));
+  click.checked === true ? (total += eventCost) : (total -= eventCost);
 
-  if (e.target.checked === true) {
-    total += eventCost;
-  } else {
-    total -= eventCost;
-  }
   document.getElementById('total-cost').innerText = `Total: $${total}`;
 });
