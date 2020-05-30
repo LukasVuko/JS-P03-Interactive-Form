@@ -15,7 +15,7 @@ document.getElementById('title').addEventListener('input', function (e) {
 });
 
 // // T-Shirt Section
-document.getElementById('colors-js-puns').style.display = 'none';
+document.getElementById('colors-js-puns').hidden = 'true';
 
 function removeAndAppendDefaultOption() {
   const colorOptions = document.getElementById('color').children;
@@ -38,17 +38,18 @@ document.getElementById('design').addEventListener('input', function (e) {
   const selected = e.target.value;
 
   if (selected === 'JS Puns' || selected === 'Love JS') {
-    document.getElementById('colors-js-puns').style.display = '';
+    document.getElementById('colors-js-puns').removeAttribute('hidden');
+
     Array.from(colors).forEach((option) => {
       const regex = RegExp(selected);
       if (regex.test(option.innerText)) {
-        option.style.display = '';
+        option.removeAttribute('hidden');
       } else {
-        option.style.display = 'none';
+        option.hidden = 'true';
       }
     });
   } else {
-    document.getElementById('colors-js-puns').style.display = 'none';
+    document.getElementById('colors-js-puns').true = 'true';
   }
 
   removeAndAppendDefaultOption();
