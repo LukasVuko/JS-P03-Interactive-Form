@@ -15,23 +15,41 @@ document.getElementById('title').addEventListener('input', function (e) {
 });
 
 // // T-Shirt Section
-document.getElementById('colors-js-puns').hidden = 'true';
+document.getElementById('colors-js-puns').style.display = 'none';
+
+function removeAndAppendDefaultOption() {
+  const colorOptions = document.getElementById('color').children;
+  for (i = 0; i < colorOptions.length; i++) {
+    if (colorOptions[i].id === 'defaultOption') {
+      colorOptions[i].parentNode.removeChild(colorOptions[i]);
+    }
+  }
+  const defaultOption = document.createElement('OPTION');
+  defaultOption.id = 'defaultOption';
+  defaultOption.value = 'defaultColor';
+  defaultOption.textContent = 'Please select a T-shirt theme';
+  defaultOption.selected = true;
+  defaultOption.disabled = true;
+  document.getElementById('color').appendChild(defaultOption);
+}
 
 document.getElementById('design').addEventListener('input', function (e) {
   const colors = document.getElementById('color').children;
   const selected = e.target.value;
 
   if (selected === 'JS Puns' || selected === 'Love JS') {
-    document.getElementById('colors-js-puns').removeAttribute('hidden');
+    document.getElementById('colors-js-puns').style.display = '';
     Array.from(colors).forEach((option) => {
       const regex = RegExp(selected);
       if (regex.test(option.innerText)) {
-        option.removeAttribute('hidden');
+        option.style.display = '';
       } else {
-        option.hidden = 'true';
+        option.style.display = 'none';
       }
     });
   } else {
-    document.getElementById('colors-js-puns').hidden = 'true';
+    document.getElementById('colors-js-puns').style.display = 'none';
   }
+
+  removeAndAppendDefaultOption();
 });
