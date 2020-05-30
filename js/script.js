@@ -49,7 +49,7 @@ document.getElementById('design').addEventListener('input', function (e) {
       }
     });
   } else {
-    document.getElementById('colors-js-puns').true = 'true';
+    document.getElementById('colors-js-puns').hidden = 'true';
   }
 
   removeAndAppendDefaultOption();
