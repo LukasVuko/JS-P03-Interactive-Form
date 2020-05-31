@@ -14,7 +14,7 @@
       </header>
 
       <form action="index.html" method="post" novalidate>
-        <fieldset>
+        <fieldset class="basic">
           <legend>Basic Info</legend>
 
           <label for="name">Name:</label>
@@ -88,8 +88,8 @@
         <fieldset class="activities">
           <legend>Register for Activities</legend>
           <label>
-            <input id="test" type="checkbox" name="all" data-cost="200" /> Main
-            Conference — $200
+            <input type="checkbox" name="all" data-cost="200" /> Main Conference
+            — $200
           </label>
           <label>
             <input
@@ -146,7 +146,7 @@
             npm Workshop — Wednesday 1pm-4pm, $100
           </label>
         </fieldset>
-        <fieldset>
+        <fieldset class="paymentFieldset">
           <legend>Payment Info</legend>
 
           <label for="payment">I'm going to pay with:</label>

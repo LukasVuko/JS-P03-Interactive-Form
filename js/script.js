@@ -121,6 +121,68 @@ paymentDiv.addEventListener('input', (e) => {
   }
 });
 
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+/* ~~~~ Append Error Messages to the page ~~~~ */
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+
+// Each eror message has a unique ID which will be used to show and hide in the validation section
+
+function append(errorId, msg, parentNode, insertBeforeId) {
+  const error = document.createElement('p');
+  error.innerText = `${msg}`;
+  error.style.color = 'grey';
+  error.id = `${errorId}`;
+  error.hidden = true;
+  document
+    .getElementsByClassName(`${parentNode}`)[0]
+    .insertBefore(error, document.getElementById(`${insertBeforeId}`));
+}
+
+append(
+  'nameError',
+  'Please enter a valid name which contains no numbers or special characters.',
+  'basic',
+  'name'
+);
+append('mailError', 'Please enter a valid email address.', 'basic', 'mail');
+append(
+  'activityError',
+  'Please select at least one activity.',
+  'activities',
+  'total-cost'
+);
+append(
+  'creditError1',
+  'Please enter a credit card number.',
+  'paymentFieldset',
+  'credit-card'
+);
+append(
+  'creditError2',
+  'Please enter a number that is between 13 and 16 digits long.',
+  'paymentFieldset',
+  'credit-card'
+);
+append(
+  'creditError3',
+  'Please enter a vallid ZIP code.',
+  'paymentFieldset',
+  'credit-card'
+);
+append(
+  'creditError4',
+  'Please enter a valid CVV number.',
+  'paymentFieldset',
+  'credit-card'
+);
+
 /* ~~~~~~~~~~~~~~~~~~~~ */
 /* ~~~~ Validation ~~~~ */
 /* ~~~~~~~~~~~~~~~~~~~~ */
+
+function showErrorMessage(errorId) {
+  document.getElementById(`${errorId}`).removeAttribute('hidden');
+}
+function hideErrorMessage(errorId) {
+  document.getElementById(`${errorId}`).hidden = true;
+}
