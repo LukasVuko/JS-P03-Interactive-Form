@@ -83,8 +83,10 @@ activity.addEventListener('input', (e) => {
     ) {
       if (click.checked === true) {
         checkList[i].disabled = true;
+        checkList[i].parentNode.style.color = 'grey';
       } else if (click.checked === false) {
         checkList[i].disabled = false;
+        checkList[i].parentNode.style.color = '';
       }
     }
   }
