@@ -175,7 +175,12 @@ append(
   'paymentFieldset',
   'credit-card'
 );
-
+append(
+  'registerError',
+  'One or more fields were filled out incorrectly.',
+  'form',
+  'register'
+);
 /* ~~~~~~~~~~~~~~~~~~~~ */
 /* ~~~~ Validation ~~~~ */
 /* ~~~~~~~~~~~~~~~~~~~~ */
@@ -190,11 +195,51 @@ function hideErrorMessage(errorId) {
   return false;
 }
 
-// Criteria
-let bool = '';
+// Flags (booleans) which will determine if all validations are passed on submit
 
-if (true) {
-  bool = showErrorMessage('nameError');
-} else {
-  bool = hideErrorMessage('nameError');
-}
+let nameFlag = '';
+let mailFlag = '';
+let activityFlag = '';
+let credFlag1 = '';
+let credFlag2 = '';
+let credFlag3 = '';
+let credFlag4 = '';
+
+// let nameFlag = true;
+// let mailFlag = true;
+// let activityFlag = true;
+// let credFlag1 = true;
+// let credFlag2 = true;
+// let credFlag3 = true;
+// let credFlag4 = true;
+
+// if (true) {
+//   bool = showErrorMessage('nameError');
+// } else {
+//   bool = hideErrorMessage('nameError');
+// }
+
+// Regex test for name
+const regexNameTest = /^[a-z ,.'-]+$/i;
+const regexMailTest = '';
+const regexCreditTest1 = '';
+const regexCreditTest2 = '';
+const regexCreditTest3 = '';
+const regexCreditTest4 = '';
+
+document.querySelector('form').addEventListener('submit', (e) => {
+  e.preventDefault();
+  if (
+    nameFlag &&
+    mailFlag &&
+    activityFlag &&
+    credFlag1 &&
+    credFlag2 &&
+    credFlag3 &&
+    credFlag4
+  ) {
+    document.querySelector('form').submit();
+  } else {
+    showErrorMessage('registerError');
+  }
+});
