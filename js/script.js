@@ -185,47 +185,49 @@ append(
 /* ~~~~ Validation ~~~~ */
 /* ~~~~~~~~~~~~~~~~~~~~ */
 
-// Helpers
+// Utilities (Validation)
 function showErrorMessage(errorId) {
   document.getElementById(`${errorId}`).removeAttribute('hidden');
-  return true;
+  return false;
 }
 function hideErrorMessage(errorId) {
   document.getElementById(`${errorId}`).hidden = true;
-  return false;
+  return true;
 }
 
 // Flags (booleans) which will determine if all validations are passed on submit
 
-let nameFlag = '';
-let mailFlag = '';
-let activityFlag = '';
-let credFlag1 = '';
-let credFlag2 = '';
-let credFlag3 = '';
-let credFlag4 = '';
-
-// let nameFlag = true;
-// let mailFlag = true;
-// let activityFlag = true;
-// let credFlag1 = true;
-// let credFlag2 = true;
-// let credFlag3 = true;
-// let credFlag4 = true;
-
-// if (true) {
-//   bool = showErrorMessage('nameError');
-// } else {
-//   bool = hideErrorMessage('nameError');
-// }
+let nameFlag = false;
+let mailFlag = false;
+let activityFlag = false;
+let credFlag1 = false;
+let credFlag2 = false;
+let credFlag3 = false;
+let credFlag4 = false;
 
 // Regex test for name
-const regexNameTest = /^[a-z ,.'-]+$/i;
-const regexMailTest = '';
+const regexNameTest = /^[\'a-zA-Z -]{2,30}$/;
+const regexMailTest = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 const regexCreditTest1 = '';
 const regexCreditTest2 = '';
 const regexCreditTest3 = '';
 const regexCreditTest4 = '';
+
+document.getElementById('name').addEventListener('input', (e) => {
+  if (regexNameTest.test(e.target.value)) {
+    nameFlag = hideErrorMessage('nameError');
+  } else {
+    nameFlag = showErrorMessage('nameError');
+  }
+});
+
+document.getElementById('mail').addEventListener('input', (e) => {
+  if (regexMailTest.test(e.target.value)) {
+    mailFlag = hideErrorMessage('mailError');
+  } else {
+    mailFlag = showErrorMessage('mailError');
+  }
+});
 
 document.querySelector('form').addEventListener('submit', (e) => {
   e.preventDefault();
