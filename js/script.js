@@ -64,7 +64,6 @@ document.getElementById('design').addEventListener('input', function (e) {
 /* ~~~~ Activities Functionality ~~~~ */
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
-// Create and Append Total Cost HTML
 const totalCostTag = document.createElement('P');
 totalCostTag.id = 'total-cost';
 totalCostTag.innerText = 'Total: $0';
@@ -95,3 +94,31 @@ activity.addEventListener('input', (e) => {
 
   document.getElementById('total-cost').innerText = `Total: $${total}`;
 });
+
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+/* ~~~~ Payment Info Functionality ~~~~ */
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+
+document.getElementById('paypal').hidden = true;
+document.getElementById('bitcoin').hidden = true;
+
+const paymentDiv = document.getElementById('payment');
+const selectMethodOption = paymentDiv.firstElementChild;
+paymentDiv.removeChild(selectMethodOption);
+const paymentOptions = paymentDiv.children;
+
+paymentDiv.addEventListener('input', (e) => {
+  for (i = 0; i < paymentOptions.length; i++) {
+    if (paymentOptions[i].value !== e.target.value) {
+      document.getElementById(`${paymentOptions[i].value}`).hidden = true;
+    } else {
+      document
+        .getElementById(`${paymentOptions[i].value}`)
+        .removeAttribute('hidden');
+    }
+  }
+});
+
+/* ~~~~~~~~~~~~~~~~~~~~ */
+/* ~~~~ Validation ~~~~ */
+/* ~~~~~~~~~~~~~~~~~~~~ */
