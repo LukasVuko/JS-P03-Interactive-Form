@@ -60,9 +60,9 @@ document.getElementById('design').addEventListener('input', function (e) {
   removeAndAppendDefaultOption();
 });
 
-/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
-/* ~~~~ Activities Functionality ~~~~ */
-/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+/* ~~~~ Activities Functionality: Disable conflicting events ~~~~ */
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
 const totalCostTag = document.createElement('P');
 totalCostTag.id = 'total-cost';
@@ -97,9 +97,9 @@ activity.addEventListener('input', (e) => {
   document.getElementById('total-cost').innerText = `Total: $${total}`;
 });
 
-/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
-/* ~~~~ Payment Info Functionality ~~~~ */
-/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+/* ~~~~ Payment Info Functionality: Hide payment methods that aren't selected ~~~~ */
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
 document.getElementById('paypal').hidden = true;
 document.getElementById('bitcoin').hidden = true;
@@ -125,7 +125,7 @@ paymentDiv.addEventListener('input', (e) => {
 /* ~~~~ Append Error Messages to the page ~~~~ */
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
-// Each eror message has a unique ID which will be used to show and hide in the validation section
+// Each <p> insert contains a unique ID which will be used to show and hide in the validation section
 
 function append(errorId, msg, parentNode, insertBeforeId) {
   const error = document.createElement('p');
@@ -180,9 +180,21 @@ append(
 /* ~~~~ Validation ~~~~ */
 /* ~~~~~~~~~~~~~~~~~~~~ */
 
+// Helpers
 function showErrorMessage(errorId) {
   document.getElementById(`${errorId}`).removeAttribute('hidden');
+  return true;
 }
 function hideErrorMessage(errorId) {
   document.getElementById(`${errorId}`).hidden = true;
+  return false;
+}
+
+// Criteria
+let bool = '';
+
+if (true) {
+  bool = showErrorMessage('nameError');
+} else {
+  bool = hideErrorMessage('nameError');
 }
