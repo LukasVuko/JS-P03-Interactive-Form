@@ -208,10 +208,10 @@ let credFlag4 = false;
 // Regex test for name
 const regexNameTest = /^[\'a-zA-Z -]{2,30}$/;
 const regexMailTest = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-const regexCreditTest1 = '';
-const regexCreditTest2 = '';
-const regexCreditTest3 = '';
-const regexCreditTest4 = '';
+const regexCreditTest1 = /^\d*\.?\d+$/;
+const regexCreditTest2 = /^[1-9][0-9]{12,15}$/;
+const regexCreditTest3 = /^[0-9]{5}(?:-[0-9]{4})?$/;
+const regexCreditTest4 = /^[0-9][0-9][0-9]$/;
 
 document.getElementById('name').addEventListener('input', (e) => {
   if (regexNameTest.test(e.target.value)) {
@@ -229,6 +229,38 @@ document.getElementById('mail').addEventListener('input', (e) => {
   }
 });
 
+document.getElementById('cc-num').addEventListener('input', (e) => {
+  if (regexCreditTest1.test(e.target.value)) {
+    credFlag1 = hideErrorMessage('creditError1');
+  } else {
+    credFlag1 = showErrorMessage('creditError1');
+  }
+});
+
+document.getElementById('cc-num').addEventListener('input', (e) => {
+  if (regexCreditTest2.test(e.target.value)) {
+    credFlag2 = hideErrorMessage('creditError2');
+  } else {
+    credFlag2 = showErrorMessage('creditError2');
+  }
+});
+
+document.getElementById('zip').addEventListener('input', (e) => {
+  if (regexCreditTest3.test(e.target.value)) {
+    credFlag3 = hideErrorMessage('creditError3');
+  } else {
+    credFlag3 = showErrorMessage('creditError3');
+  }
+});
+
+document.getElementById('cvv').addEventListener('input', (e) => {
+  if (regexCreditTest4.test(e.target.value)) {
+    credFlag4 = hideErrorMessage('creditError4');
+  } else {
+    credFlag4 = showErrorMessage('creditError4');
+  }
+});
+
 document.querySelector('form').addEventListener('submit', (e) => {
   e.preventDefault();
   if (
@@ -242,6 +274,9 @@ document.querySelector('form').addEventListener('submit', (e) => {
   ) {
     document.querySelector('form').submit();
   } else {
+    if (!credFlag1) {
+      credFlag1 = credFlag1 = showErrorMessage('creditError1');
+    }
     showErrorMessage('registerError');
   }
 });
