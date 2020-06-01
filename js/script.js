@@ -236,14 +236,41 @@ addListener('cc-num', regexCreditTest2, 'credFlag2', 'creditError2');
 addListener('zip', regexCreditTest3, 'credFlag3', 'creditError3');
 addListener('cvv', regexCreditTest4, 'credFlag4', 'creditError4');
 
+document
+  .getElementsByClassName('activities')[0]
+  .addEventListener('input', () => {
+    const checkList = document
+      .getElementsByClassName('activities')[0]
+      .querySelectorAll('input');
+
+    let arr = [];
+    for (i = 0; i < checkList.length; i++) {
+      if (checkList[i].checked === true) {
+        const t = true;
+        arr.push(t);
+      } else {
+        const f = false;
+        arr.push(f);
+      }
+    }
+
+    if (arr.every((i) => i === false)) {
+      flags.activityFlag = showErrorMessage('activityError');
+    } else {
+      flags.activityFlag = hideErrorMessage('activityError');
+    }
+  });
+
 document.querySelector('form').addEventListener('submit', (e) => {
   e.preventDefault();
-  if (Object.values(flags).every()) {
-    document.querySelector('form').submit();
-  } else {
-    if (!credFlag1) {
-      credFlag1 = showErrorMessage('creditError1');
-    }
-    showErrorMessage('registerError');
-  }
+  console.log(Object.values(flags));
 });
+
+// if (Object.values(flags).every()) {
+//     document.querySelector('form').submit();
+//   } else {
+//     if (!credFlag1) {
+//       credFlag1 = showErrorMessage('creditError1');
+//     }
+//     showErrorMessage('registerError');
+//   }
