@@ -140,7 +140,7 @@ function append(errorId, msg, parentNode, insertBeforeId) {
 
 append(
   'nameError',
-  'Name must contain at least two letters with no special characters.',
+  'Name must contain at least two letters and no special characters.',
   'basic',
   'name'
 );
@@ -181,18 +181,21 @@ append(
   'form',
   'register'
 );
+
 /* ~~~~~~~~~~~~~~~~~~~~ */
 /* ~~~~ Validation ~~~~ */
 /* ~~~~~~~~~~~~~~~~~~~~ */
 
 // Flags (booleans) which will determine if all validations are passed on submission
-let nameFlag = false;
-let mailFlag = false;
-let activityFlag = false;
-let credFlag1 = false;
-let credFlag2 = false;
-let credFlag3 = false;
-let credFlag4 = false;
+const flags = {
+  nameFlag: false,
+  mailFlag: false,
+  activityFlag: false,
+  credFlag1: false,
+  credFlag2: false,
+  credFlag3: false,
+  credFlag4: false,
+};
 
 // Regex expressions
 const regexNameTest = /^[\'a-zA-Z -]{2,30}$/;
@@ -212,11 +215,11 @@ function hideErrorMessage(errorId) {
   return true;
 }
 
-function showAndHide(regexExpression, e, flagName, errorMessageID) {
+function showAndHide(regexExpression, e, flag, errorMessageID) {
   if (regexExpression.test(e.target.value)) {
-    flagName = hideErrorMessage(errorMessageID);
+    flags[flag] = hideErrorMessage(errorMessageID);
   } else {
-    flagName = showErrorMessage(errorMessageID);
+    flags[flag] = showErrorMessage(errorMessageID);
   }
 }
 
@@ -226,24 +229,16 @@ function addListener(inputFieldID, regexExpression, flagName, errorMessageID) {
   });
 }
 
-addListener('name', regexNameTest, nameFlag, 'nameError');
-// addListener('mail', regexMailTest, mailFlag, 'mailError');
-// addListener('cc-num', regexCreditTest1, credFlag1, 'creditError1');
-// addListener('cc-num', regexCreditTest2, credFlag2, 'creditError2');
-// addListener('zip', regexCreditTest3, credFlag3, 'creditError3');
-// addListener('cvv', regexCreditTest4, credFlag4, 'creditError4');
+addListener('name', regexNameTest, 'nameFlag', 'nameError');
+addListener('mail', regexMailTest, 'mailFlag', 'mailError');
+addListener('cc-num', regexCreditTest1, 'credFlag1', 'creditError1');
+addListener('cc-num', regexCreditTest2, 'credFlag2', 'creditError2');
+addListener('zip', regexCreditTest3, 'credFlag3', 'creditError3');
+addListener('cvv', regexCreditTest4, 'credFlag4', 'creditError4');
 
 document.querySelector('form').addEventListener('submit', (e) => {
   e.preventDefault();
-  if (
-    nameFlag &&
-    mailFlag &&
-    activityFlag &&
-    credFlag1 &&
-    credFlag2 &&
-    credFlag3 &&
-    credFlag4
-  ) {
+  if (Object.values(flags).every()) {
     document.querySelector('form').submit();
   } else {
     if (!credFlag1) {
