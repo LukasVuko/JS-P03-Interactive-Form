@@ -140,7 +140,7 @@ function append(errorId, msg, parentNode, insertBeforeId) {
 
 append(
   'nameError',
-  'Please enter a valid name which contains no numbers or special characters.',
+  'Name must contain at least two letters with no special characters.',
   'basic',
   'name'
 );
@@ -185,6 +185,23 @@ append(
 /* ~~~~ Validation ~~~~ */
 /* ~~~~~~~~~~~~~~~~~~~~ */
 
+// Flags (booleans) which will determine if all validations are passed on submission
+let nameFlag = false;
+let mailFlag = false;
+let activityFlag = false;
+let credFlag1 = false;
+let credFlag2 = false;
+let credFlag3 = false;
+let credFlag4 = false;
+
+// Regex expressions
+const regexNameTest = /^[\'a-zA-Z -]{2,30}$/;
+const regexMailTest = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+const regexCreditTest1 = /^\d*\.?\d+$/;
+const regexCreditTest2 = /^[1-9][0-9]{12,15}$/;
+const regexCreditTest3 = /^[0-9]{5}(?:-[0-9]{4})?$/;
+const regexCreditTest4 = /^[0-9][0-9][0-9]$/;
+
 // Utilities (Validation)
 function showErrorMessage(errorId) {
   document.getElementById(`${errorId}`).removeAttribute('hidden');
@@ -195,71 +212,26 @@ function hideErrorMessage(errorId) {
   return true;
 }
 
-// Flags (booleans) which will determine if all validations are passed on submit
-
-let nameFlag = false;
-let mailFlag = false;
-let activityFlag = false;
-let credFlag1 = false;
-let credFlag2 = false;
-let credFlag3 = false;
-let credFlag4 = false;
-
-// Regex test for name
-const regexNameTest = /^[\'a-zA-Z -]{2,30}$/;
-const regexMailTest = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-const regexCreditTest1 = /^\d*\.?\d+$/;
-const regexCreditTest2 = /^[1-9][0-9]{12,15}$/;
-const regexCreditTest3 = /^[0-9]{5}(?:-[0-9]{4})?$/;
-const regexCreditTest4 = /^[0-9][0-9][0-9]$/;
-
-document.getElementById('name').addEventListener('input', (e) => {
-  if (regexNameTest.test(e.target.value)) {
-    nameFlag = hideErrorMessage('nameError');
+function showAndHide(regexExpression, e, flagName, errorMessageID) {
+  if (regexExpression.test(e.target.value)) {
+    flagName = hideErrorMessage(errorMessageID);
   } else {
-    nameFlag = showErrorMessage('nameError');
+    flagName = showErrorMessage(errorMessageID);
   }
-});
+}
 
-document.getElementById('mail').addEventListener('input', (e) => {
-  if (regexMailTest.test(e.target.value)) {
-    mailFlag = hideErrorMessage('mailError');
-  } else {
-    mailFlag = showErrorMessage('mailError');
-  }
-});
+function addListener(inputFieldID, regexExpression, flagName, errorMessageID) {
+  document.getElementById(inputFieldID).addEventListener('input', (e) => {
+    showAndHide(regexExpression, e, flagName, errorMessageID);
+  });
+}
 
-document.getElementById('cc-num').addEventListener('input', (e) => {
-  if (regexCreditTest1.test(e.target.value)) {
-    credFlag1 = hideErrorMessage('creditError1');
-  } else {
-    credFlag1 = showErrorMessage('creditError1');
-  }
-});
-
-document.getElementById('cc-num').addEventListener('input', (e) => {
-  if (regexCreditTest2.test(e.target.value)) {
-    credFlag2 = hideErrorMessage('creditError2');
-  } else {
-    credFlag2 = showErrorMessage('creditError2');
-  }
-});
-
-document.getElementById('zip').addEventListener('input', (e) => {
-  if (regexCreditTest3.test(e.target.value)) {
-    credFlag3 = hideErrorMessage('creditError3');
-  } else {
-    credFlag3 = showErrorMessage('creditError3');
-  }
-});
-
-document.getElementById('cvv').addEventListener('input', (e) => {
-  if (regexCreditTest4.test(e.target.value)) {
-    credFlag4 = hideErrorMessage('creditError4');
-  } else {
-    credFlag4 = showErrorMessage('creditError4');
-  }
-});
+addListener('name', regexNameTest, nameFlag, 'nameError');
+// addListener('mail', regexMailTest, mailFlag, 'mailError');
+// addListener('cc-num', regexCreditTest1, credFlag1, 'creditError1');
+// addListener('cc-num', regexCreditTest2, credFlag2, 'creditError2');
+// addListener('zip', regexCreditTest3, credFlag3, 'creditError3');
+// addListener('cvv', regexCreditTest4, credFlag4, 'creditError4');
 
 document.querySelector('form').addEventListener('submit', (e) => {
   e.preventDefault();
@@ -275,7 +247,7 @@ document.querySelector('form').addEventListener('submit', (e) => {
     document.querySelector('form').submit();
   } else {
     if (!credFlag1) {
-      credFlag1 = credFlag1 = showErrorMessage('creditError1');
+      credFlag1 = showErrorMessage('creditError1');
     }
     showErrorMessage('registerError');
   }
