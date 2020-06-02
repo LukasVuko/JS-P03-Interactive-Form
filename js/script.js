@@ -262,14 +262,35 @@ document
 
 document.querySelector('form').addEventListener('submit', (e) => {
   e.preventDefault();
-  console.log(Object.values(flags));
-});
 
-// if (Object.values(flags).every()) {
-//   document.querySelector('form').submit();
-// } else {
-//   showErrorMessage('registerError');
-// }
+  const isTrue = (currentValue) => currentValue === true;
+  if (Object.values(flags).every(isTrue)) {
+    document.querySelector('form').submit();
+  } else {
+    showErrorMessage('registerError');
+    if (!flags.nameFlag) {
+      showErrorMessage('nameError');
+    }
+    if (!flags.mailFlag) {
+      showErrorMessage('mailError');
+    }
+    if (!flags.activityFlag) {
+      showErrorMessage('activityError');
+    }
+    if (!flags.credFlag1) {
+      showErrorMessage('creditError1');
+    }
+    if (!flags.credFlag2) {
+      showErrorMessage('creditError2');
+    }
+    if (!flags.credFlag3) {
+      showErrorMessage('creditError3');
+    }
+    if (!flags.credFlag4) {
+      showErrorMessage('creditError4');
+    }
+  }
+});
 
 // OTHER HELPER UTILITIES
 
