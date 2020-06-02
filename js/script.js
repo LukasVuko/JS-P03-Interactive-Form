@@ -229,6 +229,7 @@ function addListener(inputFieldID, regexExpression, flagName, errorMessageID) {
   });
 }
 
+// Text Input Listeners //
 addListener('name', regexNameTest, 'nameFlag', 'nameError');
 addListener('mail', regexMailTest, 'mailFlag', 'mailError');
 addListener('cc-num', regexCreditTest1, 'credFlag1', 'creditError1');
@@ -236,6 +237,7 @@ addListener('cc-num', regexCreditTest2, 'credFlag2', 'creditError2');
 addListener('zip', regexCreditTest3, 'credFlag3', 'creditError3');
 addListener('cvv', regexCreditTest4, 'credFlag4', 'creditError4');
 
+// Checkbox Input Listeners //
 document
   .getElementsByClassName('activities')[0]
   .addEventListener('input', () => {
@@ -264,10 +266,30 @@ document.querySelector('form').addEventListener('submit', (e) => {
 });
 
 // if (Object.values(flags).every()) {
-//     document.querySelector('form').submit();
-//   } else {
-//     if (!credFlag1) {
-//       credFlag1 = showErrorMessage('creditError1');
-//     }
-//     showErrorMessage('registerError');
-//   }
+//   document.querySelector('form').submit();
+// } else {
+//   showErrorMessage('registerError');
+// }
+
+// OTHER HELPER UTILITIES
+
+document.getElementById('payment').addEventListener('input', () => {
+  if (document.getElementById('payment').selectedIndex != 0) {
+    flags.credFlag1 = true;
+    hideErrorMessage('creditError1');
+    flags.credFlag2 = true;
+    hideErrorMessage('creditError2');
+    flags.credFlag3 = true;
+    hideErrorMessage('creditError3');
+    flags.credFlag4 = true;
+    hideErrorMessage('creditError4');
+  } else {
+    document.getElementById('cc-num').value = '';
+    document.getElementById('zip').value = '';
+    document.getElementById('cvv').value = '';
+    flags.credFlag1 = false;
+    flags.credFlag2 = false;
+    flags.credFlag3 = false;
+    flags.credFlag4 = false;
+  }
+});
