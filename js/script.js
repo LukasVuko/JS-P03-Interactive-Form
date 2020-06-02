@@ -243,18 +243,15 @@ document
       .getElementsByClassName('activities')[0]
       .querySelectorAll('input');
 
-    let arr = [];
-    for (i = 0; i < checkList.length; i++) {
-      if (checkList[i].checked === true) {
-        const t = true;
-        arr.push(t);
+    const booleans = Array.from(checkList).map((item) => {
+      if (item.checked === true) {
+        return true;
       } else {
-        const f = false;
-        arr.push(f);
+        return false;
       }
-    }
+    });
 
-    if (arr.every((i) => i === false)) {
+    if (booleans.every((i) => i === false)) {
       flags.activityFlag = showErrorMessage('activityError');
     } else {
       flags.activityFlag = hideErrorMessage('activityError');
